@@ -34,13 +34,14 @@ const InstagramIcon = () => (
 const Hero = () => {
   return (
     <section className="hero-dark">
-      
-      <div className="hero-huge-text-container">
-        <h1 className="huge-text solid">PORTFOLIO</h1>
+      {/* Background outline texts (BEHIND the image) */}
+      <div className="hero-huge-text-container text-behind" aria-hidden="true">
+        <h1 className="huge-text solid text-ghost">PORTFOLIO</h1>
         <h1 className="huge-text outline">PORTFOLIO</h1>
         <h1 className="huge-text outline">PORTFOLIO</h1>
       </div>
 
+      {/* Middle Image & Socials Layer */}
       <div className="hero-content-wrapper">
         <div className="hero-visual-layer">
           <img src={firstCardImg} alt="Hero representation" className="abstract-photo-placeholder" decoding="async" fetchPriority="high" />
@@ -60,6 +61,11 @@ const Hero = () => {
             <MailIcon />
           </a>
         </div>
+      </div>
+
+      {/* Foreground solid white text (ABOVE / OVER the image) */}
+      <div className="hero-huge-text-container text-front">
+        <h1 className="huge-text solid">PORTFOLIO</h1>
       </div>
       
     </section>
