@@ -1,13 +1,36 @@
 import React, { useState, useEffect } from 'react'
 
+const links = [
+  { href: '#resume', label: 'Resume' },
+  { href: '#work', label: 'Work' },
+  { href: '#personality', label: 'Beyond Code' },
+]
+
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
+  // Close the mobile menu with Escape, or when the viewport grows past the breakpoint
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
+    if (!isMenuOpen) return
+    const close = () => {
+      setIsMenuOpen(false)
+      document.body.style.overflow = ''
     }
+    const onKey = e => { if (e.key === 'Escape') close() }
+    const wide = window.matchMedia('(min-width: 821px)')
+    const onWide = e => { if (e.matches) close() }
+    window.addEventListener('keydown', onKey)
+    wide.addEventListener('change', onWide)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      wide.removeEventListener('change', onWide)
+    }
+  }, [isMenuOpen])
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 24)
+    handleScroll()
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
@@ -25,44 +48,34 @@ const Header = () => {
   }
 
   return (
-    <>
-      <header className={`header ${isScrolled ? 'header-scrolled' : ''}`}>
-        <div className="container header-container">
-          <div className="logo">
-            <span className="logo-star" style={{ display: 'flex', alignItems: 'center' }}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="10" y1="19" x2="14" y2="5"></line>
-                <polyline points="15 18 21 12 15 6"></polyline>
-              </svg>
-            </span> Emanuele Galiano
-          </div>
-          
-          <button 
-            className={`hamburger ${isMenuOpen ? 'active' : ''}`}
-            onClick={toggleMenu}
-            aria-label="Toggle navigation menu"
-            aria-expanded={isMenuOpen}
-          >
-            <span className="hamburger-line"></span>
-            <span className="hamburger-line"></span>
-            <span className="hamburger-line"></span>
-          </button>
+    <header className={`header ${isScrolled ? 'header-scrolled' : ''} ${isMenuOpen ? 'menu-open' : ''}`}>
+      <div className="container header-inner">
+        <a href="#top" className="logo" onClick={closeMenu}>
+          <span className="logo-mark">EG</span>
+          <span className="logo-name">Emanuele Galiano</span>
+        </a>
 
-          <nav className={`nav-links ${isMenuOpen ? 'nav-open' : ''}`}>
-            <a href="#about" className="nav-link" onClick={closeMenu}>About</a>
-            <a href="#resume" className="nav-link" onClick={closeMenu}>Resume</a>
-            <a href="#work" className="nav-link" onClick={closeMenu}>Work</a>
-            <a href="#contact" className="btn btn-secondary" style={{ padding: '0.5rem 1.5rem', fontSize: '0.9rem' }} onClick={closeMenu}>Get in touch!</a>
-          </nav>
-        </div>
-      </header>
-      
-      <div 
-        className={`menu-overlay ${isMenuOpen ? 'active' : ''}`} 
-        onClick={closeMenu}
-        aria-hidden="true"
-      />
-    </>
+        <button
+          className={`hamburger ${isMenuOpen ? 'active' : ''}`}
+          onClick={toggleMenu}
+          aria-label="Toggle navigation menu"
+          aria-expanded={isMenuOpen}
+        >
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav className={`nav ${isMenuOpen ? 'nav-open' : ''}`}>
+          {links.map((link, i) => (
+            <a key={link.href} href={link.href} className="nav-link" onClick={closeMenu}>
+              <span className="nav-index">0{i + 1}</span>
+              {link.label}
+            </a>
+          ))}
+          <a href="#contact" className="btn btn-small" onClick={closeMenu}>Get in touch</a>
+        </nav>
+      </div>
+    </header>
   )
 }
 

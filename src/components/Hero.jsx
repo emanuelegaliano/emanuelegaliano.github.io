@@ -1,73 +1,86 @@
 import React from 'react'
-import firstCardImg from '../assets/first_card.webp'
+import heroImg from '../assets/hero-portrait.webp'
+import { socials } from './socials'
 
-const GithubIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
-    <path d="M9 18c-4.51 2-5-2-7-2"/>
-  </svg>
-)
+// Each PORTFOLIO line is SVG text stretched to the full viewBox width
+// (textLength), so it fills the column exactly whatever serif the device
+// falls back to, and can never overflow on narrow screens.
+const VIEW_W = 1000
+const FONT_SIZE = 182
+const CAP = 128 // approx. cap height of Palatino at FONT_SIZE
+const GAP = 30
+const STROKE = 3
+const lineY = i => STROKE + CAP + i * (CAP + GAP)
+const VIEW_H = lineY(2) + STROKE
 
-const LinkedinIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-    <rect width="4" height="12" x="2" y="9"/>
-    <circle cx="4" cy="4" r="2"/>
-  </svg>
-)
-
-const MailIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect width="20" height="16" x="2" y="4" rx="2"></rect>
-    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-  </svg>
-)
-
-const InstagramIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
-    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+const Marquee = ({ lines, className }) => (
+  <svg className={className} viewBox={`0 0 ${VIEW_W} ${VIEW_H}`} fontSize={FONT_SIZE} aria-hidden="true" focusable="false">
+    {lines.map(({ index, variant }) => (
+      <text
+        key={index}
+        x="0"
+        y={lineY(index)}
+        textLength={VIEW_W}
+        lengthAdjust="spacingAndGlyphs"
+        className={variant === 'solid' ? 'marquee-solid' : 'marquee-outline'}
+      >
+        PORTFOLIO
+      </text>
+    ))}
   </svg>
 )
 
 const Hero = () => {
   return (
-    <section className="hero-dark">
-      {/* Background outline texts (BEHIND the image) */}
-      <div className="hero-huge-text-container text-behind" aria-hidden="true">
-        <h1 className="huge-text solid text-ghost">PORTFOLIO</h1>
-        <h1 className="huge-text outline">PORTFOLIO</h1>
-        <h1 className="huge-text outline">PORTFOLIO</h1>
-      </div>
+    <section className="hero" id="top">
+      <div className="container hero-grid">
 
-      {/* Middle Image & Socials Layer */}
-      <div className="hero-content-wrapper">
-        <div className="hero-visual-layer">
-          <img src={firstCardImg} alt="Hero representation" className="abstract-photo-placeholder" decoding="async" fetchPriority="high" />
-        </div>
-        
-        <div className="hero-socials">
-          <a href="https://github.com/emanuelegaliano" target="_blank" rel="noopener noreferrer" className="hero-social-link" aria-label="GitHub">
-            <GithubIcon />
-          </a>
-          <a href="https://www.linkedin.com/in/emanuele-galiano-5806083b0/" target="_blank" rel="noopener noreferrer" className="hero-social-link" aria-label="LinkedIn">
-            <LinkedinIcon />
-          </a>
-          <a href="https://www.instagram.com/emanuele.galianoo" target="_blank" rel="noopener noreferrer" className="hero-social-link" aria-label="Instagram">
-            <InstagramIcon />
-          </a>
-          <a href="mailto:galianoo.emanuele@gmail.com" className="hero-social-link" aria-label="Email">
-            <MailIcon />
-          </a>
-        </div>
-      </div>
+        <div className="hero-text">
+          <p className="eyebrow">Causal AI · Machine Learning · Catania</p>
+          <h1 className="hero-title">
+            Emanuele<br />
+            <em>Galiano</em>
+          </h1>
+          <p className="hero-lede">
+            Computer Science graduate (110/110 cum laude, UNICT) and research group member at Co-AI IPLAB.
+            I explore how causal inference can move machine learning beyond correlation, toward reasoning and explainability.
+          </p>
 
-      {/* Foreground solid white text (ABOVE / OVER the image) */}
-      <div className="hero-huge-text-container text-front">
-        <h1 className="huge-text solid">PORTFOLIO</h1>
+          <div className="hero-actions">
+            <a href="#work" className="btn">Selected work</a>
+            <a href="#resume" className="btn btn-ghost-light">Resume</a>
+          </div>
+
+          <ul className="hero-socials">
+            {socials.map(({ label, href, Icon }) => (
+              <li key={label}>
+                <a href={href} target={href.startsWith('mailto') ? undefined : '_blank'} rel="noopener noreferrer" aria-label={label}>
+                  <Icon size={19} />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* PORTFOLIO x3 behind the cut-out photo, last outline line again in front */}
+        <div className="hero-stage">
+          <div className="hero-stage-text">
+            <Marquee
+              className="marquee"
+              lines={[
+                { index: 0, variant: 'solid' },
+                { index: 1, variant: 'outline' },
+                { index: 2, variant: 'outline' },
+              ]}
+            />
+          </div>
+          <img src={heroImg} alt="Emanuele Galiano presenting a research talk" className="hero-person" width="775" height="1057" fetchPriority="high" />
+          <div className="hero-stage-text hero-stage-front">
+            <Marquee className="marquee" lines={[{ index: 2, variant: 'outline' }]} />
+          </div>
+        </div>
+
       </div>
-      
     </section>
   )
 }

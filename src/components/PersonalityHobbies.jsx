@@ -1,92 +1,82 @@
 import React from 'react'
+import { ArrowUpRight } from 'lucide-react'
 
+const traits = [
+  { label: 'Extroverted', value: 71 },
+  { label: 'Intuitive', value: 73 },
+  { label: 'Thinking', value: 60 },
+  { label: 'Judging', value: 58 },
+  { label: 'Turbulent', value: 51 },
+]
+
+const hobbies = [
+  { icon: '🎸', title: 'Slapping tha bass', desc: 'Grooving and keeping the rhythm' },
+  { icon: '♟️', title: 'Strategy Games', desc: 'Planning and executing complex moves' },
+  { icon: '🧠', title: 'Studying new things', desc: 'Always curious and learning' },
+]
+
+// Same anatomy as the project cards (meta row, title, headline, body,
+// action), in the dark theme of the footer.
 const PersonalityHobbies = () => {
   return (
-    <section className="personality-section" id="personality">
+    <section className="section section-dark" id="personality">
       <div className="container">
-        <h2 className="section-heading-editorial" style={{ textAlign: 'center', marginBottom: '4rem' }}>
-          Beyond Code
-        </h2>
-        
+        <p className="section-label"><span>03</span> Beyond Code</p>
+        <h2 className="sr-only">Beyond Code</h2>
+
         <div className="ph-grid">
-          
-          {/* Personality Card */}
-          <div className="ph-card personality-card">
-            <div className="ph-card-header">
-              <h3>Commander (ENTJ-T)</h3>
-              <span className="ph-badge">16Personalities</span>
+
+          <article className="ph-card">
+            <div className="project-meta">
+              <span className="project-index">01</span>
+              <span className="project-version">16Personalities</span>
             </div>
-            
-            <p className="personality-desc">
+            <h3 className="project-title">Commander</h3>
+            <p className="project-headline">ENTJ-T</p>
+            <p className="project-desc">
               Commanders are bold, imaginative, and strong-willed, always finding a way – or making one. These decisive types love momentum and accomplishment, often acting on their creative visions.
             </p>
 
-            <div className="personality-traits">
-              <div className="trait-item">
-                <span className="trait-label">Extroverted</span>
-                <div className="trait-bar"><div className="trait-fill ext" style={{width: '71%'}}></div></div>
-                <span className="trait-pct">71%</span>
-              </div>
-              <div className="trait-item">
-                <span className="trait-label">Intuitive</span>
-                <div className="trait-bar"><div className="trait-fill int" style={{width: '73%'}}></div></div>
-                <span className="trait-pct">73%</span>
-              </div>
-              <div className="trait-item">
-                <span className="trait-label">Thinking</span>
-                <div className="trait-bar"><div className="trait-fill thn" style={{width: '60%'}}></div></div>
-                <span className="trait-pct">60%</span>
-              </div>
-              <div className="trait-item">
-                <span className="trait-label">Judging</span>
-                <div className="trait-bar"><div className="trait-fill jdg" style={{width: '58%'}}></div></div>
-                <span className="trait-pct">58%</span>
-              </div>
-              <div className="trait-item">
-                <span className="trait-label">Turbulent</span>
-                <div className="trait-bar"><div className="trait-fill trb" style={{width: '51%'}}></div></div>
-                <span className="trait-pct">51%</span>
-              </div>
-            </div>
-            
-            <a href="https://www.16personalities.com/entj-personality" target="_blank" rel="noopener noreferrer" className="ph-link">
-              Read more on 16personalities <span>&rarr;</span>
-            </a>
-          </div>
+            <ul className="trait-list">
+              {traits.map(trait => (
+                <li key={trait.label} className="trait">
+                  <span className="trait-label">{trait.label}</span>
+                  <span className="trait-bar"><span style={{ width: `${trait.value}%` }}></span></span>
+                  <span className="trait-pct">{trait.value}%</span>
+                </li>
+              ))}
+            </ul>
 
-          {/* Hobbies Card */}
-          <div className="ph-card hobbies-card">
-            <div className="ph-card-header">
-              <h3>Hobbies & Interests</h3>
+            <div className="project-actions">
+              <a href="https://www.16personalities.com/entj-personality" target="_blank" rel="noopener noreferrer" className="project-btn">
+                <span>Read more on 16personalities</span>
+                <ArrowUpRight size={15} />
+              </a>
             </div>
-            <p className="personality-desc" style={{marginBottom: '2rem'}}>
+          </article>
+
+          <article className="ph-card">
+            <div className="project-meta">
+              <span className="project-index">02</span>
+            </div>
+            <h3 className="project-title">Hobbies</h3>
+            <p className="project-headline">&amp; Interests</p>
+            <p className="project-desc">
               When I'm not writing code or analyzing data, you can find me exploring other passions.
             </p>
-            <div className="hobbies-list">
-              <div className="hobby-item">
-                <span className="hobby-icon">🎸</span>
-                <div className="hobby-info">
-                  <h4>Slapping tha bass</h4>
-                  <p>Grooving and keeping the rhythm</p>
-                </div>
-              </div>
-              <div className="hobby-item">
-                <span className="hobby-icon">♟️</span>
-                <div className="hobby-info">
-                  <h4>Strategy Games</h4>
-                  <p>Planning and executing complex moves</p>
-                </div>
-              </div>
-              <div className="hobby-item">
-                <span className="hobby-icon">🧠</span>
-                <div className="hobby-info">
-                  <h4>Studying new things</h4>
-                  <p>Always curious and learning</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
+            <ul className="hobby-list">
+              {hobbies.map(hobby => (
+                <li key={hobby.title} className="hobby">
+                  <span className="hobby-icon" aria-hidden="true">{hobby.icon}</span>
+                  <div>
+                    <h4>{hobby.title}</h4>
+                    <p>{hobby.desc}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </article>
+
         </div>
       </div>
     </section>
