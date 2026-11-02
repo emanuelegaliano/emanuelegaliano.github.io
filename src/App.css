@@ -290,6 +290,7 @@
 .hero-stage-text {
   position: relative;
   z-index: 1;
+  transform: translateY(-12px);
 }
 
 .hero-stage-front {
@@ -300,6 +301,8 @@
   z-index: 3;
   pointer-events: none;
 }
+
+
 
 .marquee {
   display: block;
@@ -330,6 +333,11 @@
   max-width: none;
   transform: translateX(-50%);
   filter: drop-shadow(0 0 1px rgba(246, 241, 232, 0.25));
+  /* Fade out only across the last PORTFOLIO line: the stage ratios are
+     fixed, so line 2 always ends at ~85% of the photo height and line 3
+     starts at ~88%. Fully opaque above that, so the other lines stay hidden */
+  -webkit-mask-image: linear-gradient(to bottom, #000 85.5%, transparent 94%);
+  mask-image: linear-gradient(to bottom, #000 85.5%, transparent 94%);
 }
 
 @media (max-width: 960px) {

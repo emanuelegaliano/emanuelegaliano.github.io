@@ -62,21 +62,21 @@ const Hero = () => {
           </ul>
         </div>
 
-        {/* PORTFOLIO x3 behind the cut-out photo, last outline line again in front */}
+        {/* Outlined lines behind the cut-out photo; the photo fades out at the
+            bottom, where the solid last line sits in front of it, fully opaque */}
         <div className="hero-stage">
           <div className="hero-stage-text">
             <Marquee
               className="marquee"
               lines={[
-                { index: 0, variant: 'solid' },
+                { index: 0, variant: 'outline' },
                 { index: 1, variant: 'outline' },
-                { index: 2, variant: 'outline' },
               ]}
             />
           </div>
           <img src={heroImg} alt="Emanuele Galiano presenting a research talk" className="hero-person" width="775" height="1057" fetchPriority="high" />
           <div className="hero-stage-text hero-stage-front">
-            <Marquee className="marquee" lines={[{ index: 2, variant: 'outline' }]} />
+            <Marquee className="marquee" lines={[{ index: 2, variant: 'solid' }]} />
           </div>
         </div>
 
